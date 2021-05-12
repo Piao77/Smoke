@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>烟雾消散效果</title>
+	<link rel="stylesheet" href="./css/index.css">
+	</head>
+	<body>
+		<section>
+			<p class="text">
+				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio expedita voluptates deleniti unde dolore modi eius nihil odio consectetur sapiente minima repudiandae eum laudantium reprehenderit earum incidunt temporibus itaque ducimus.
+			</p>
+		</section>
+		<script type="text/javascript">
+			// 1.得到伪数组
+			const texts = document.querySelector('.text');
+			// 2.通过replace方法配合正则为每个匹配字符包裹标签span（通过替换）
+			texts.innerHTML = texts.textContent.replace(/\S/g,'<span>$&</span>');//这里span忘了闭合，直接栈溢出了
+			// 3.给每个span标签绑定点击事件，先得到所有标签
+			const letters = document.querySelectorAll('span');
+			let goBackTime = 2;
+			// 4.循环遍历，绑定事件
+			for(let i=0;i<letters.length;i++){
+				// 5.要通过添加监听来添加事件，下面这段是会报错的，因为长度改变！
+				// letters[i].onmouseover = function(){
+				// 	letters[i].className.add('active');
+				letters[i].addEventListener('mouseover',function(){
+					letters[i].classList.add('active');
+					letters[i].classList.add('active'+i);
+				setTimeout(()=>{
+				let letter = document.querySelector('.active'+i);
+				letter.classList.remove('active');//对所有的active都清除，不循环遍历
+				letter.classList.add('show');//为每一个都加上show类名
+			},goBackTime*1000);})
+			}
+
+		</script>
+	</body>
+</html>
